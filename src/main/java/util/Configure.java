@@ -207,6 +207,7 @@ public class Configure {
     private String analyzedProjectName = "helloJDT";
     private String lang = "java";
     private String curr_pro_suffix = ".java";
+    private String[] sdkSourcePaths;
 
     private String outputDotFile = analyzedProjectName + ".dot";
     private String outputCsvNodeFile = analyzedProjectName + "_node.csv";
@@ -223,6 +224,14 @@ public class Configure {
         outputCsvNodeFile = analyzedProjectName + "_node.csv";
         outputCsvEdgeFile = analyzedProjectName + "_edge.csv";
         attributeName = analyzedProjectName + "-sdsm";
+    }
+
+    public String[] getSdkSourcePaths() {
+        return sdkSourcePaths;
+    }
+
+    public void setSdkSourcePaths(String[] sdkSourcePaths) {
+        this.sdkSourcePaths = sdkSourcePaths;
     }
 
     public String getInputSrcPath() {

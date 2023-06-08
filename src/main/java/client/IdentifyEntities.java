@@ -23,10 +23,23 @@ public class IdentifyEntities {
     private String project_name;
     private ArrayList<String> additional_path = new ArrayList<>();
     private String aidl_path = null;
+    private String[] sdkSourcePaths;
 
     public IdentifyEntities(String project_path, String project_name){
         this.project_path = PathUtil.unifyPath(project_path);
         this.project_name = project_name;
+    }
+
+    public IdentifyEntities(String project_path,
+                            String project_name,
+                            String[] additional_path,
+                            String[] sdkSourcePaths) {
+        this.project_path = PathUtil.unifyPath(project_path);
+        this.project_name = project_name;
+        this.sdkSourcePaths = sdkSourcePaths;
+        for (String path: additional_path){
+            this.additional_path.add(PathUtil.unifyPath(path));
+        }
     }
 
     public IdentifyEntities(String project_path, String project_name, String[] additional_path){
@@ -50,6 +63,14 @@ public class IdentifyEntities {
         for (String path: additional_path){
             this.additional_path.add(PathUtil.unifyPath(path));
         }
+    }
+
+    public String[] getSdkSourcePaths() {
+        return sdkSourcePaths;
+    }
+
+    public void setSdkSourcePaths(String[] sdkSourcePaths) {
+        this.sdkSourcePaths = sdkSourcePaths;
     }
 
     public String getProject_path() {
@@ -81,6 +102,14 @@ public class IdentifyEntities {
         HashMap<Tuple<String, Integer>, ArrayList<String>> checkBin = new HashMap<>();
 //        ArrayList<String> whole_file_list = current.getFileNameList();
         checkBin.put(new Tuple<>(current.getProjectPath()+current.getCurrentProjectName(), 1), current.getFileNameList());
+
+        HashMap<Tuple<String, Integer>, ArrayList<String>> sdkCheckBin = new HashMap<>();
+        if (this.sdkSourcePaths != null) {
+            for (String path : this.sdkSourcePaths) {
+                FileUtil sdkFile = new FileUtil(path);
+                sdkCheckBin.put(new Tuple<>(path, 1), sdkFile.getFileNameList());
+            }
+        }
 
         if (!this.getAdditional_path().isEmpty()){
             int binNum = 2;
@@ -116,6 +145,9 @@ public class IdentifyEntities {
 
         parser.setUnitName(current.getCurrentProjectName());
         ArrayList<String> whole_file_list = new ArrayList<>();
+        for (Tuple<String, Integer> binPath: sdkCheckBin.keySet()) {
+            whole_file_list.addAll(sdkCheckBin.get(binPath));
+        }
         for (Tuple<String, Integer> binPath: checkBin.keySet()){
             whole_file_list.addAll(checkBin.get(binPath));
         }

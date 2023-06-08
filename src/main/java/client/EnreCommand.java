@@ -31,6 +31,8 @@ public class EnreCommand {
     private String external;
     @Option(names = {"-s", "--slim"}, description = "The slim output version, which removing the location and external entity info. ")
     private boolean slim;
+    @Option(names = {"-k", "--sdkPath"},  description = "The sdk source code directory paths if you want the sdk library class to be analyzed as well.")
+    private String[] sdkSourcePaths;
 
     public EnreCommand() {
     }
@@ -45,6 +47,14 @@ public class EnreCommand {
     }
     public void setSrc(String src) {
         this.src = src;
+    }
+
+    public String[] getSdkSourcePaths() {
+        return sdkSourcePaths;
+    }
+
+    public void setSdkSourcePaths(String[] sdkSourcePaths) {
+        this.sdkSourcePaths = sdkSourcePaths;
     }
 
     public void setProjectName(String projectName) {

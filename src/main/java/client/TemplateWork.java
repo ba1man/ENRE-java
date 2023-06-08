@@ -65,6 +65,7 @@ public class TemplateWork {
         String depMask = "111111111";
         String aidlDir = app.getAidl();
         String hiddenDir = app.getHidden();
+        String[] sdkSourcePaths = app.getSdkSourcePaths();
 
         String[] additionDir = app.getDir();
 
@@ -74,7 +75,7 @@ public class TemplateWork {
         //Slim versin
         boolean slim = app.isSlim();
 
-        config(lang, inputDir, projectName);
+        config(lang, inputDir, projectName, sdkSourcePaths);
         String outputFile = configure.getAnalyzedProjectName()+ "-out";
         if (app.getOutputFile() != null){
             outputFile = app.getOutputFile();
@@ -98,6 +99,9 @@ public class TemplateWork {
             } else {
                 entityTreeBuilder = new IdentifyEntities(inputDir, projectName);
             }
+        }
+        if (sdkSourcePaths != null) {
+            entityTreeBuilder.setSdkSourcePaths(sdkSourcePaths);
         }
         entityTreeBuilder.run();
 
@@ -156,10 +160,11 @@ public class TemplateWork {
      * @param inputDir
      * @param projectName
      */
-    private void config(String lang, String inputDir, String projectName) {
+    private void config(String lang, String inputDir, String projectName, String[] sdkSourcePaths) {
         configure.setLang(lang);
         configure.setInputSrcPath(inputDir);
         configure.setAnalyzedProjectName(projectName);
+        configure.setSdkSourcePaths(sdkSourcePaths);
         configure.setDefault();
     }
 

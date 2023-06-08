@@ -83,6 +83,9 @@ public class PathUtil {
      */
     public static String getPathInProject(String fullpath, String projectName){
         String[] temp;
+        if (!fullpath.contains(projectName)) {
+            return fullpath;
+        }
         temp = fullpath.split(projectName,2);
         if(temp[1].endsWith(".java") || temp[1].endsWith(".aidl")){
             return temp[1].substring(1);
