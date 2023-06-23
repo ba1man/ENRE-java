@@ -62,7 +62,7 @@ public class TemplateWork {
     }
 
     public Map<Integer, ArrayList<Tuple<Integer, Relation>>> execute(EnreCommand app) {
-        config("java", app.getSrc(), app.getProjectName());
+        config("java", app.getSrc(), app.getProjectName(), app.getSdkSourcePaths());
         IdentifyEntities entityTreeBuilder;
         if (app.getAidl() != null) {
             if (app.getDir().length != 0) {
