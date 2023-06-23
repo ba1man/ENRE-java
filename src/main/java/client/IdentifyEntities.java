@@ -181,8 +181,9 @@ public class IdentifyEntities {
 
             try{
 //                honor
-                if (pair.source.contains("tests")) continue;
-                System.out.println(PathUtil.getPathInProject(PathUtil.unifyPath(pair.source),this.project_name));
+                if (pair.source.contains("tests/")) continue;
+//                System.out.println(PathUtil.getPathInProject(PathUtil.unifyPath(pair.source),this.project_name));
+                System.out.println(PathUtil.unifyPath(pair.source));
 
 //                if("src/main/java/helloJDT/LauncherAccessibilityDelegate.java".equals(PathUtil.getPathInProject(PathUtil.unifyPath(pair.source),this.project_name))){
 //                    pair.ast.accept(new EntityVisitor(PathUtil.getPathInProject(PathUtil.unifyPath(pair.source),this.project_name), pair.ast));
@@ -194,7 +195,8 @@ public class IdentifyEntities {
                         break;
                     }
                 }
-                pair.ast.accept(new EntityVisitor(PathUtil.getPathInProject(PathUtil.unifyPath(pair.source),this.project_name), pair.ast, fileBin));
+//                pair.ast.accept(new EntityVisitor(PathUtil.getPathInProject(PathUtil.unifyPath(pair.source),this.project_name), pair.ast, fileBin));
+                pair.ast.accept(new EntityVisitor(PathUtil.unifyPath(pair.source), pair.ast, fileBin));
 //                System.out.println(fileBinNum);
             }
             catch (EmptyStackException e){
