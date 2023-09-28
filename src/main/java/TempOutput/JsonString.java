@@ -261,12 +261,15 @@ public class JsonString {
                         reObj.put("modifyAccessible", true);
                     }
                     if (!type.getArguemnts().isEmpty()){
-                        String args = "";
-                        for (String arg: type.getArguemnts()){
-                            args = args.concat(arg.replace("\"", "").replace(",", " ") + " ");
+                        ArrayList<String> arguments = type.getArguemnts();
+                        StringBuilder args = new StringBuilder();
+                        for (int i = 0; i < arguments.size(); i++) {
+                            args.append(type.getArguemnts().get(i));
+                            if (i < arguments.size() - 1) {
+                                args.append(",");
+                            }
                         }
-                        args = args.substring(0, args.length()-1);
-                        reObj.put("arguments", args);
+                        reObj.put("arguments", args.toString());
                     }
                     if (type.getInvoke()){
 //                        try{
