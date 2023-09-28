@@ -131,6 +131,7 @@ public class EntityDTOAdapter extends TypeAdapter<EntityDTO> {
 
   protected void write(JsonWriter out, FileEntityDTO value) throws IOException {
     writeAdditionalBinDTO(out, value.getAdditionalBin());
+    writeFile(out, value.getFile());
   }
 
   protected void write(JsonWriter out, ClassEntityDTO value) throws IOException {
@@ -168,6 +169,7 @@ public class EntityDTOAdapter extends TypeAdapter<EntityDTO> {
   protected void write(JsonWriter out, EnumConstantEntityDTO value) throws IOException {
     writeFile(out, value.getFile());
     writeAdditionalBinDTO(out, value.getAdditionalBin());
+    writeLocationDTO(out, value.getLocation(), "location");
     writeHidden(out, value.getHidden());
   }
 

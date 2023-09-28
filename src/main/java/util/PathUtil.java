@@ -77,16 +77,17 @@ public class PathUtil {
 
     /**
      * Get the path inside project
-     * @param fullpath C:/.../project/src/java/pkg/file.java
+     * @param fullPath C:/.../project/src/java/pkg/file.java
      * @param projectName  project
      * @return pkg/file.java
      */
-    public static String getPathInProject(String fullpath, String projectName){
+    public static String getPathInProject(String fullPath, String projectName){
         String[] temp;
-        if (!fullpath.contains(projectName)) {
-            return fullpath;
+        if(fullPath.contains(projectName)){
+            temp = fullPath.split(projectName,2);
+        } else {
+            temp = fullPath.split(getLastStrByPathDelimiter(fullPath), 2);
         }
-        temp = fullpath.split(projectName,2);
         if(temp[1].endsWith(".java") || temp[1].endsWith(".aidl")){
             return temp[1].substring(1);
         }

@@ -3,3 +3,5 @@ target
 tests
 *.iml
 src/test/
+*-enre-out/
+*.log
