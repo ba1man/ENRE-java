@@ -4,6 +4,7 @@ import entity.*;
 import entity.properties.Location;
 import entity.properties.QualifiedNameSite;
 import entity.properties.ReflectSite;
+import net.sf.json.util.JSONUtils;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.TypeParameter;
 import util.*;
@@ -199,10 +200,7 @@ public class EntityVisitor extends CKVisitor {
             currentInstanceRawType = node.getType().toString();
         }
         IMethodBinding constructorBinding = node.resolveConstructorBinding();
-        if (constructorBinding == null) {
-            return super.visit(node);
-        }
-        String methodName = constructorBinding.getName();
+        String methodName = node.getType().toString();
         Location location = ProcessEntity.supplement_location(cu, node.getStartPosition(), node.getLength());
         ArrayList<String> arguments = new ArrayList<>();
         for (Object par : node.arguments()) {
@@ -253,8 +251,9 @@ public class EntityVisitor extends CKVisitor {
             if (bindVar != -1) {
                 declaringTypeQualifiedName = singleCollect.getEntityById(bindVar).getRawType();
             } else {
-                declaringTypeQualifiedName = bindVarName;
+                declaringTypeQualifiedName = Configure.EXTERNAL_DUMMY_CLASS_NAME;
             }
+            System.out.println("inside: " + declaringTypeQualifiedName + "." + methodName + ", " + bindVar);
             if (singleCollect.getEntityById(scopeStack.peek()) instanceof ScopeEntity) {
                 ((ScopeEntity) singleCollect.getEntityById(scopeStack.peek())).addExternalCall(declaringTypeQualifiedName, methodName, location, bindVarName, bindVar, arguments);
             }

@@ -135,9 +135,22 @@ public class CallBf extends DepBackfill{
     public int findExternalMethod(String className, String methName){
         int externalId = -1;
         String qualifiedName = className + "." + methName;
-        for (String externalName : singleCollect.getThirdPartyAPIs().keySet()){
-            if (externalName.contains(qualifiedName)){
-                externalId = singleCollect.getThirdPartyAPIs().get(externalName);
+        if (className.equals(Configure.EXTERNAL_DUMMY_CLASS_NAME)) {
+            for (String externalName : singleCollect.getThirdPartyAPIs().keySet()){
+                if (externalName.endsWith(methName)) {
+                    externalId = singleCollect.getThirdPartyAPIs().get(externalName);
+                }
+            }
+        } else {
+            if (qualifiedName.contains("<") && qualifiedName.contains(">")) {
+                int i = qualifiedName.indexOf("<");
+                int j = qualifiedName.indexOf(">");
+                qualifiedName = qualifiedName.substring(0, i) + qualifiedName.substring(j + 1);
+            }
+            for (String externalName : singleCollect.getThirdPartyAPIs().keySet()){
+                if (!qualifiedName.isEmpty() && !qualifiedName.equals(".") && externalName.contains(qualifiedName)) {
+                    externalId = singleCollect.getThirdPartyAPIs().get(externalName);
+                }
             }
         }
         return externalId;

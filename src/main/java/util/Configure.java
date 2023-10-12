@@ -149,6 +149,8 @@ public class Configure {
     public static final String CLASS = "Class";
     public static final String RUNTIME = "Runtime";
 
+    public static final String EXTERNAL_DUMMY_CLASS_NAME = "ENRE_EXTERNAL_DUMMY_CLASS";
+
 //    //Android MaxTargetSdk value
 //    public static final int MAX_TARGETSDK_ABSENT = 0;
 //    public static final int MAX_TARGETSDK_BASE = 1;
